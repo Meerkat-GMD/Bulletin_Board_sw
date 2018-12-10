@@ -37,7 +37,7 @@ public class read extends Activity {
 
         btitle = intent.getStringExtra("btitle");
         bdate = intent.getStringExtra("bdate");
-        List<String> list = new ArrayList<>();
+        final List<String> list = new ArrayList<>();
 
         Btext = (TextView)findViewById(R.id.btext);
         Bdate = (TextView)findViewById(R.id.bdate);
@@ -45,7 +45,7 @@ public class read extends Activity {
         writecomment = (Button)findViewById(R.id.writecomment);
         listview = (ListView)findViewById(R.id.ctext);
         final EditText newcomment = (EditText)findViewById(R.id.comment);
-        list.add("--무플 방지 위원회--");
+
         // 게시글 내용 채우기
         try {
             JSONObject getboard = new JSONObject();
@@ -70,6 +70,7 @@ public class read extends Activity {
                 System.out.println(result3);
                 JSONArray obj = new JSONArray(result3);
                 System.out.println(obj.length());
+                list.add("--무플 방지 위원회--");
                 for (int i=0; i<obj.length(); i++){
                     System.out.println("*************************************************");
                     JSONObject coms = obj.getJSONObject(i);
@@ -77,12 +78,12 @@ public class read extends Activity {
                     System.out.println(coms.getString("ctext"));
                     list.add(coms.getString("ctext"));
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.textfinal,list);
-                listview.setAdapter(adapter);
             }
         } catch (Exception e){
             e.printStackTrace();
         }
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.textfinal,list);
+        listview.setAdapter(adapter);
         writecomment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,16 +95,21 @@ public class read extends Activity {
                     commdata.accumulate("ctext",nc);
                     result2 = new JSONTASK().execute("putcomment",commdata.toString()).get();
                     if (result2.equals("1")){
+                        list.add(0,nc);
+                        newcomment.setText(null);
                         Toast.makeText(read.this,"댓글 입력 완료!",Toast.LENGTH_SHORT).show();
                     } else{
                         Toast.makeText(read.this,"데이터 전송 실패..",Toast.LENGTH_SHORT).show();
                     }
+
+                    adapter.notifyDataSetChanged();
                 } catch (Exception e){
                     e.printStackTrace();
                 }
             }
         });
-
-
+    }
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 }

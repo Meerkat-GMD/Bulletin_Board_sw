@@ -184,7 +184,6 @@ public class Auth extends Activity implements View.OnClickListener, Dialog.OnCan
             case R.id.emailAuth_btn : //다이얼로그 내의 인증번호 인증 버튼을 눌렀을 시
                 int user_answer = Integer.parseInt(emailAuth_number.getText().toString());
                 if(user_answer==randomNum){
-                    Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
                     try{
                         String result = "실패";
                         JSONObject authdata = new JSONObject();
@@ -192,6 +191,7 @@ public class Auth extends Activity implements View.OnClickListener, Dialog.OnCan
                         authdata.accumulate("webmail",webmail);
                         result = new JSONTASK().execute("putauth",authdata.toString()).get();
                         if (result.equals("1")){
+                            Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
                             Intent intents = new Intent(getBaseContext(), MainActivity.class);
                             startActivity(intents);
                             finish();
@@ -199,6 +199,7 @@ public class Auth extends Activity implements View.OnClickListener, Dialog.OnCan
                             Toast.makeText(this,"데이터 전송 실패",Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e){
+                        Toast.makeText(this,"예외 발생",Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 }else {

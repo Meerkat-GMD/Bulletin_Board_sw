@@ -64,7 +64,6 @@ public class MainActivity extends Activity{
                 intent.putExtra("btitle",oData.get(position).bTitle);
                 intent.putExtra("bdate",oData.get(position).bDate);
                 startActivity(intent);
-                finish();
             }
         });
 
@@ -73,7 +72,6 @@ public class MainActivity extends Activity{
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), writing.class);
                 startActivity(intent);
-                finish();
             }
         });
     }

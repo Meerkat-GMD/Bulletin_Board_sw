@@ -45,8 +45,9 @@ public class writing extends Activity {
                     boarddata.accumulate("btext",btexts);
                     result = new JSONTASK().execute("putboard",boarddata.toString()).get();
                     if (result.equals("1")){
-                        Intent intents = new Intent(getBaseContext(), MainActivity.class);
-                        startActivity(intents);
+                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         finish();
                     } else {
                         Toast.makeText(writing.this,"데이터 전송 실패",Toast.LENGTH_SHORT).show();
@@ -61,5 +62,8 @@ public class writing extends Activity {
         mNow = System.currentTimeMillis();
         mDate = new Date(mNow);
         return mFormat.format(mDate);
+    }
+    public void onBackPressed(){
+        super.onBackPressed();
     }
 }

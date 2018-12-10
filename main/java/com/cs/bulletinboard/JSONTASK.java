@@ -32,7 +32,9 @@ public class JSONTASK extends AsyncTask<String,Void,String> {//<시작파라미�
 
         BufferedReader reader = null;
         try {
-            String url = "http://10.0.2.2:8080/"+ params[0];
+            String url = "http://ggm.gonetis.com:8000/"+ params[0];
+            //String url = "http://10.0.2.2:8000/"+ params[0];
+
             String Body = params[1];
             URL URLObject = new URL(url);
             HttpURLConnection Conn = (HttpURLConnection)URLObject.openConnection();
