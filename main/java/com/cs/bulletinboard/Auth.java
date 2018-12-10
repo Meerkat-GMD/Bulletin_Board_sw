@@ -19,6 +19,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.Random;
 
 
@@ -28,13 +32,13 @@ public class Auth extends Activity implements View.OnClickListener, Dialog.OnCan
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 100;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_CONTACTS = 101;
-
+    String myNumber = null;
+    String webmail = null;
     Random random = new Random();
     final int randomNum = random.nextInt(900000)+100000; // 테스트할 6자리 인증번호
 
     EditText authEmail;
     Button authBtn;
-
 
     /*Dialog에 관련된 필드*/
 
@@ -80,13 +84,31 @@ public class Auth extends Activity implements View.OnClickListener, Dialog.OnCan
                 requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE}, 1000);
             }
         } else {
-            String myNumber = null;
+
             TelephonyManager mgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             try {
                 myNumber = mgr.getLine1Number();
-                myNumber = myNumber.replace("+82", "0");
-                Toast.makeText(Auth.this,myNumber, Toast.LENGTH_SHORT).show();
+                myNumber = myNumber.replace("+", "");
+                Toast.makeText(Auth.this,"반갑습니다!!", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
+                    e.printStackTrace();
+            }
+            try{
+                String result = "실패";
+                JSONObject phonenum = new JSONObject();
+                phonenum.accumulate("phonenum", myNumber);
+                result = new JSONTASK().execute("checkauth",phonenum.toString()).get();
+                if (result.equals("0")){
+
+                } else {
+                    WEBMAIL.getInstance().setData(result);
+                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+            } catch (Exception e){
+                e.printStackTrace();
             }
         }
 
@@ -115,55 +137,40 @@ public class Auth extends Activity implements View.OnClickListener, Dialog.OnCan
                 } else { //초가 10보다 작으면 앞에 '0' 붙여서 같이 출력. ex) 02,03,04...
                     time_counter.setText((emailAuthCount / 60) + " : 0" + (emailAuthCount - ((emailAuthCount / 60) * 60)));
                 }
-
                 //emailAuthCount은 종료까지 남은 시간임. 1분 = 60초 되므로,
                 // 분을 나타내기 위해서는 종료까지 남은 총 시간에 60을 나눠주면 그 몫이 분이 된다.
                 // 분을 제외하고 남은 초를 나타내기 위해서는, (총 남은 시간 - (분*60) = 남은 초) 로 하면 된다.
-
             }
-
 
             @Override
             public void onFinish() { //시간이 다 되면 다이얼로그 종료
-
                 authDialog.cancel();
-
             }
         }.start();
-
         emailAuth_btn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
-
         switch (v.getId()) {
-
-
             case R.id.authBtn:
-
                 EditText Email = (EditText)findViewById(R.id.authEmail);
+                webmail = Email.getText().toString();
+                WEBMAIL.getInstance().setData(webmail);
                 String S_Email = Email.getText().toString().concat("@kangwon.ac.kr");
-
                 GMailSender sender = new GMailSender("auth.mail123@gmail.com","thvmxmdnpdj123"); // SUBSTITUTE HERE
                 String S_randomNum = Integer.toString(randomNum);
-
                 try {
-
                     sender.sendMail(
                             "인증메일",
                             S_randomNum ,
                             "auth.mail123@gmail.com",
                             S_Email
-
                     );
                    Toast.makeText(this, "이메일 전송 성공", Toast.LENGTH_SHORT).show();
-
                 } catch (Exception e) {
                     Log.e("SendMail", e.getMessage(), e);
                 }
-
                 dialog = LayoutInflater.from(this);
                 dialogLayout = dialog.inflate(R.layout.auth_dialog, null); // LayoutInflater를 통해 XML에 정의된 Resource들을 View의 형태로 반환 시켜 줌
                 authDialog = new Dialog(this); //Dialog 객체 생성
@@ -175,23 +182,30 @@ public class Auth extends Activity implements View.OnClickListener, Dialog.OnCan
                 break;
 
             case R.id.emailAuth_btn : //다이얼로그 내의 인증번호 인증 버튼을 눌렀을 시
-
                 int user_answer = Integer.parseInt(emailAuth_number.getText().toString());
                 if(user_answer==randomNum){
                     Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                    try{
+                        String result = "실패";
+                        JSONObject authdata = new JSONObject();
+                        authdata.accumulate("phonenum", myNumber);
+                        authdata.accumulate("webmail",webmail);
+                        result = new JSONTASK().execute("putauth",authdata.toString()).get();
+                        if (result.equals("1")){
+                            Intent intents = new Intent(getBaseContext(), MainActivity.class);
+                            startActivity(intents);
+                            finish();
+                        } else {
+                            Toast.makeText(this,"데이터 전송 실패",Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }else {
-
                     Toast.makeText(this, "이메일 인증 실패", Toast.LENGTH_SHORT).show();
                 }
                 break;
-
-
-
         }
-
     }
 
     @Override

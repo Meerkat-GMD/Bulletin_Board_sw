@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -56,8 +58,10 @@ public class ListAdapter extends BaseAdapter {
         TextView oTextTitle = (TextView) convertView.findViewById(R.id.textTitle);
         TextView oTextDate = (TextView) convertView.findViewById(R.id.textDate);
 
-        oTextTitle.setText(m_oData.get(position).strTitle);
-        oTextDate.setText(m_oData.get(position).strDate);
+        oTextTitle.setText(m_oData.get(position).bTitle);
+        oTextDate.setText(m_oData.get(position).bDate);
+
+        convertView.setTag(""+position);
         return convertView;
     }
 }

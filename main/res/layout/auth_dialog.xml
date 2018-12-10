@@ -9,133 +9,141 @@
     >
 
     <LinearLayout
-        android:layout_weight="10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_weight="2.3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="top|center"
-        android:orientation="vertical"
-        android:gravity="top">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="380dp"
-            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/gg_line"
             android:gravity="center"
             android:text="학교 인증"
             android:textSize="25dp"
-            android:layout_weight="1"/>
+            />
 
 
         <ImageView
+            android:layout_weight="3"
             android:layout_gravity="right|bottom"
             android:layout_width="180dp"
-            android:layout_height="140dp"
+            android:layout_height="0dp"
             android:background="@drawable/email_check"
-            android:layout_weight="1"/>
+            />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:background="@drawable/gg_line"
         android:orientation="vertical">
 
         <TextView
+            android:layout_weight="0.5"
             android:layout_marginLeft="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="※안내사항
 "       />
 
         <TextView
+            android:layout_weight="1"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="- 발송된 이메일에 포함된 번호를 입력하시면 인증이 완료됩니다."/>
 
         <TextView
+            android:layout_weight="1"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="- (전화번호, 웹메일) 매칭으로 새 전화번호로 인증시, 기존 전화번호의 인증은 해제됩니다."/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:background="@drawable/gg_line"
         android:orientation="vertical">
 
         <TextView
+            android:layout_weight="0.5"
             android:layout_marginLeft="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="※이메일 입력
 "/>
 
         <TextView
+            android:layout_weight="0.5"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="- @kangwon.ac.kr 이메일 주소를 입력하세요."/>
 
         <TextView
+            android:layout_weight="1.5"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:text="- 메일이 오지 않을 경우 메일주소, 스팸함, 스팸설정, 메일함 용량등을 확인해보시고, (재발송)을 눌러 메일을 다시 요청해주세요."/>
 
     </LinearLayout>
     <LinearLayout
-        android:layout_weight="1"
+        android:layout_weight="0.5"
         android:layout_gravity="center"
-        android:background="@drawable/gg_line"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="0dp"
+        android:orientation="horizontal">
 
         <EditText
+            android:layout_weight="4"
             android:id="@+id/emailAuth_number"
-            android:layout_width="230dp"
-            android:layout_height="40dp"
-
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:hint="인증 번호를 등록해 주세요"
             android:paddingLeft="10dp"
-            android:layout_marginLeft="20dp"
             android:background="#FFFFFF"
             android:textSize="15sp"
-            android:layout_gravity="center"
+            android:gravity="center"
             />
         <TextView
+            android:layout_weight="1"
             android:id="@+id/emailAuth_time_counter"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:text="3:00"
-            android:layout_marginRight="30dp"
             android:textSize="15sp"
             android:layout_gravity="center"
             android:gravity="center"
             />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_weight="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
         <Button
             android:id="@+id/emailAuth_btn"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/gg_line"
-            android:text="OK"
-            android:textSize="22sp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="30dp"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
+            android:text="인증"
+            android:textSize="17sp"
+            android:layout_gravity="center"
+            />
+    </LinearLayout>
 </LinearLayout>

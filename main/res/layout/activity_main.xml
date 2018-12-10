@@ -6,16 +6,15 @@
     android:layout_gravity="center"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    android:background="#000000">
+    android:background="@drawable/main">
 
     <LinearLayout
         android:layout_weight = "1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
-
         <Button
             android:id="@+id/write"
-            android:text="코멘트 작성"
+            android:text="글 작성"
             android:textSize="17dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,22 +23,16 @@
 
     <LinearLayout
         android:layout_weight = "10"
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/listView"
             android:padding="6dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:divider="@android:color/transparent"
-            android:dividerHeight="6dp"
-            android:layout_weight="1"></ListView>
+            android:dividerHeight="6dp"></ListView>
     </LinearLayout>
 </LinearLayout>
